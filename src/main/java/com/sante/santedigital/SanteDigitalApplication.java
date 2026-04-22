@@ -1,4 +1,4 @@
-package com.example.santedigital;
+package com.sante.santedigital;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,6 @@ public class SanteDigitalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SanteDigitalApplication.class, args);
-        System.out.println("bonjour");
     }
-
 }
+
