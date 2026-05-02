@@ -34,7 +34,4 @@ public class PatientDTO {
     private String email;
 
     private String adresse;
-
-
-
 }

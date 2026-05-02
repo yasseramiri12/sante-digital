@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/patients")
 @RequiredArgsConstructor
 public class PatientController {
-    private PatientService patientService;
+    private final PatientService patientService;
 
     @GetMapping
     public ResponseEntity<List<PatientDTO>> getAllPatient(){

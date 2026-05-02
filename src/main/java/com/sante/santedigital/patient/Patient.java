@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "patients")
+@Table(name = "patient")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

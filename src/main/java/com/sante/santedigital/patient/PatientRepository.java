@@ -10,10 +10,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     Optional<Patient> findByNin(String nin);
 
-    boolean existsAllByNin(String nin);
-
-    boolean existsAllByEmail(String email);
-
     Optional<Patient> findByEmail(String email);
 
     boolean existsByNin(String nin);
