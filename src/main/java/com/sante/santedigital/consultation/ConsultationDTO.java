@@ -1,14 +1,13 @@
 package com.sante.santedigital.consultation;
 
-import java.time.LocalDateTime;
-
-import lombok.NoArgsConstructor;
-import lombok.Data;
-import lombok.Builder;
-import lombok.AllArgsConstructor;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 
 @Builder
 @NoArgsConstructor
@@ -16,23 +15,21 @@ import jakarta.validation.constraints.NotBlank;
 @Data
 public class ConsultationDTO {
 
-    private String compteRendu;
+    private Long consultationId;
+
+    @NotNull(message = "Patient ID is required")
+    private Long patientId;
+
+    @NotNull(message = "Medecin ID is required")
+    private Long medecinId;
+
+    @NotNull(message = "Date heure is required")
+    private LocalDateTime dateHeure;
+
+    @NotBlank(message = "Motif is required")
+    private String motif;
 
     private String diagnosticCim10;
 
-    private String motif;
-    @NotBlank
-
-    private LocalDateTime dateHeure;
-    @NotNull
-
-    private Long medecinId;
-    @NotNull
-
-    private Long patientId;
-    @NotNull
-
-    private Long consultationId;
+    private String compteRendu;
 }
-
-

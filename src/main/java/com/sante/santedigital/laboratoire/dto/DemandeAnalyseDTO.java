@@ -1,20 +1,19 @@
-package com.sante.santedigital.ordonnance;
+package com.sante.santedigital.laboratoire.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class OrdonnanceDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class DemandeAnalyseDTO {
 
-    private Long ordonnanceId;
+    private Long demandeId;
 
     @NotNull(message = "Consultation ID is required")
     private Long consultationId;
@@ -22,8 +21,8 @@ public class OrdonnanceDTO {
     @NotNull(message = "Patient ID is required")
     private Long patientId;
 
-    @NotNull(message = "Date expiration is required")
-    private LocalDate dateExpiration;
+    @NotBlank(message = "Type analyse is required")
+    private String typeAnalyse;
 
-    private StatutOrdonnance statut;
+    private String statut;
 }

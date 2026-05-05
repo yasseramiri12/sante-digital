@@ -32,10 +32,6 @@ public class MedecinService{
     }
 
     public MedecinDTO createMedecin(MedecinDTO medecinDTO){
-//        if (medecinRepository.existsById(medecinDTO.getMedecinId())){
-//            throw new RuntimeException("Doctor with id " + medecinDTO.getMedecinId() + " already exists");
-//        }
-
         if (medecinDTO.getEmail() != null && medecinRepository.existsByEmail(medecinDTO.getEmail())){
             throw new RuntimeException("Doctor with email " + medecinDTO.getEmail() + " already exists");
         }
@@ -48,21 +44,21 @@ public class MedecinService{
         Medecin saved = medecinRepository.save(medecin);
 
         return toDTO(saved);
-
     }
 
-    public MedecinDTO updateMedecin(MedecinDTO medecinDTO, Long id){
+    public MedecinDTO updateMedecin(Long id, MedecinDTO medecinDTO){
         Medecin existantMedecin = medecinRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Doctor not found with id: "+ id));
 
-        if (medecinDTO.getNumOrdre() != null && !medecinDTO.getNumOrdre().equals(existantMedecin.getNumOrdre()) && medecinRepository.existsByNumOrdre(medecinDTO.getNumOrdre())) {
-            throw new RuntimeException("Doctor with numOrdre " + medecinDTO.getNumOrdre() + " already exists");   //Si l'utilisateur veut changer le numOrdre et le numOrdre deja existe exception, et s'il utilise le meme numOrdre pas de problème.
+        if (!existantMedecin.getEmail().equals(medecinDTO.getEmail()) && medecinRepository.existsByEmail(medecinDTO.getEmail())) {
+            throw new RuntimeException("Doctor with email " + medecinDTO.getEmail() + " already exists");
         }
 
         existantMedecin.setNom(medecinDTO.getNom());
         existantMedecin.setPrenom(medecinDTO.getPrenom());
         existantMedecin.setSpecialite(medecinDTO.getSpecialite());
-        existantMedecin.setNumOrdre(medecinDTO.getNumOrdre());
+        // do NOT modify numOrdre — immutable
+        // do NOT modify utilisateurId — immutable
         existantMedecin.setTelephone(medecinDTO.getTelephone());
         existantMedecin.setEmail(medecinDTO.getEmail());
         existantMedecin.setCabinetAdresse(medecinDTO.getCabinetAdresse());
@@ -94,7 +90,6 @@ public class MedecinService{
 
     private Medecin toEntity(MedecinDTO medecinDTO){
       return Medecin.builder()
-              .medecinId(medecinDTO.getMedecinId())
               .nom(medecinDTO.getNom())
               .prenom(medecinDTO.getPrenom())
               .numOrdre(medecinDTO.getNumOrdre())

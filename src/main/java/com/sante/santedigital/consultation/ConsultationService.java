@@ -78,7 +78,6 @@ public class ConsultationService {
 
     private Consultation toEntity(ConsultationDTO dto) {
         return Consultation.builder()
-                .consultationId(dto.getConsultationId())
                 .patientId(dto.getPatientId())
                 .medecinId(dto.getMedecinId())
                 .dateHeure(dto.getDateHeure())

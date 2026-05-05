@@ -1,4 +1,4 @@
-package com.sante.santedigital.ordonnance;
+package com.sante.santedigital.laboratoire.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,21 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ordonnance")
+@Table(name = "demande_analyse")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Ordonnance {
+public class DemandeAnalyse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ordonnance_id")
-    private Long ordonnanceId;
+    @Column(name = "demande_id")
+    private Long demandeId;
 
     @Column(name = "consultation_id", nullable = false)
     private Long consultationId;
@@ -28,15 +27,11 @@ public class Ordonnance {
     @Column(name = "patient_id", nullable = false)
     private Long patientId;
 
-    @Column(name = "date_emission", nullable = false, updatable = false)
-    private LocalDateTime dateEmission;
+    @Column(name = "type_analyse", nullable = false, length = 100)
+    private String typeAnalyse;
 
-    @Column(name = "date_expiration", nullable = false)
-    private LocalDate dateExpiration;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "statut", nullable = false)
-    private StatutOrdonnance statut;
+    @Column(name = "statut", length = 20)
+    private String statut;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -47,9 +42,8 @@ public class Ordonnance {
     @PrePersist
     public void onCreate() {
         if (this.statut == null) {
-            this.statut = StatutOrdonnance.ACTIVE;
+            this.statut = "EN_ATTENTE";
         }
-        this.dateEmission = LocalDateTime.now();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -59,4 +53,3 @@ public class Ordonnance {
         this.updatedAt = LocalDateTime.now();
     }
 }
-

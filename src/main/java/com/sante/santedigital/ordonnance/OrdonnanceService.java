@@ -47,14 +47,14 @@ public class OrdonnanceService {
     public OrdonnanceDTO closeOrdonnance(Long id) {
         Ordonnance existing = ordonnanceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ordonnance not found"));
-        existing.setStatut("USED");
+        existing.setStatut(StatutOrdonnance.USED);
         return toDTO(ordonnanceRepository.save(existing));
     }
 
     public OrdonnanceDTO expireOrdonnance(Long id) {
         Ordonnance existing = ordonnanceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ordonnance not found"));
-        existing.setStatut("EXPIRED");
+        existing.setStatut(StatutOrdonnance.EXPIRED);
         return toDTO(ordonnanceRepository.save(existing));
     }
 
@@ -65,23 +65,21 @@ public class OrdonnanceService {
         ordonnanceRepository.deleteById(id);
     }
 
-    private OrdonnanceDTO toDTO(Ordonnance entity) {
+    private OrdonnanceDTO toDTO(Ordonnance ordonnance) {
         return OrdonnanceDTO.builder()
-                .ordonnanceId(entity.getOrdonnanceId())
-                .consultationId(entity.getConsultationId())
-                .patientId(entity.getPatientId())
-                .dateExpiration(entity.getDateExpiration())
-                .statut(entity.getStatut())
+                .ordonnanceId(ordonnance.getOrdonnanceId())
+                .consultationId(ordonnance.getConsultationId())
+                .patientId(ordonnance.getPatientId())
+                .dateExpiration(ordonnance.getDateExpiration())
+                .statut(ordonnance.getStatut())
                 .build();
     }
 
-    private Ordonnance toEntity(OrdonnanceDTO dto) {
+    private Ordonnance toEntity(OrdonnanceDTO ordonnanceDTO) {
         return Ordonnance.builder()
-                .ordonnanceId(dto.getOrdonnanceId())
-                .consultationId(dto.getConsultationId())
-                .patientId(dto.getPatientId())
-                .dateExpiration(dto.getDateExpiration())
-                .statut(dto.getStatut())
+                .consultationId(ordonnanceDTO.getConsultationId())
+                .patientId(ordonnanceDTO.getPatientId())
+                .dateExpiration(ordonnanceDTO.getDateExpiration())
                 .build();
     }
 }
