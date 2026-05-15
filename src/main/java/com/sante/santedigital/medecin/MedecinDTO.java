@@ -15,6 +15,8 @@ public class MedecinDTO {
 
     private Long medecinId;
 
+    private Long utilisateurId;
+
     @NotBlank(message = "Last name is required")
     private String nom;
 

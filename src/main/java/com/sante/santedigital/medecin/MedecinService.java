@@ -90,6 +90,7 @@ public class MedecinService{
 
     private Medecin toEntity(MedecinDTO medecinDTO){
       return Medecin.builder()
+              .utilisateurId(medecinDTO.getUtilisateurId())
               .nom(medecinDTO.getNom())
               .prenom(medecinDTO.getPrenom())
               .numOrdre(medecinDTO.getNumOrdre())
