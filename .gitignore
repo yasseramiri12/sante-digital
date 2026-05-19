@@ -1,0 +1,52 @@
+# ─── Java / Maven ────────────────────────────────────────────────────────────
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# ─── Spring Boot ─────────────────────────────────────────────────────────────
+src/main/resources/application-local.properties
+src/main/resources/application-prod.properties
+src/main/resources/application-secret.properties
+
+# ─── IntelliJ IDEA ───────────────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ─── Node / npm ──────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/tsconfig.tsbuildinfo
+
+# ─── Vite cache ──────────────────────────────────────────────────────────────
+frontend/.vite/
+
+# ─── OS junk ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Editor misc ─────────────────────────────────────────────────────────────
+.vscode/
+*.swp
+*.swo
+*~
+
+# ─── Secrets / env ───────────────────────────────────────────────────────────
+.env
+*.env
+*.pem
+*.key
+*.p12
+*.jks
+secrets/

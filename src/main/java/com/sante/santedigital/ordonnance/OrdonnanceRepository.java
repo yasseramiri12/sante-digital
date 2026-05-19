@@ -10,7 +10,7 @@ public interface OrdonnanceRepository extends JpaRepository<Ordonnance, Long> {
 
     List<Ordonnance> findByPatientId(Long patientId);
 
-    List<Ordonnance> findByStatut(String statut);
+    List<Ordonnance> findByStatut(StatutOrdonnance statut);
 
     List<Ordonnance> findByConsultationId(Long consultationId);
 }

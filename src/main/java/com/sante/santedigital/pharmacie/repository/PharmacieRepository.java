@@ -17,3 +17,4 @@ public interface PharmacieRepository extends JpaRepository<Pharmacie, Long> {
 
     boolean existsByNumAutorisation(String num);
 }
+    

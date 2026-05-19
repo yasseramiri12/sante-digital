@@ -1,0 +1,586 @@
+{
+  "info": {
+    "name": "SanteDigital — API Complete",
+    "description": "All 50 endpoints across 7 modules. Import this file into Postman then set the `baseUrl` variable (default: http://localhost:8080). Run requests top-to-bottom per folder — CREATE first, then use the returned IDs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "sante-digital-v2"
+  },
+  "variable": [
+    { "key": "baseUrl",        "value": "http://localhost:8080", "type": "string" },
+    { "key": "patientId",      "value": "1",  "type": "string" },
+    { "key": "medecinId",      "value": "1",  "type": "string" },
+    { "key": "consultationId", "value": "1",  "type": "string" },
+    { "key": "ordonnanceId",   "value": "1",  "type": "string" },
+    { "key": "demandeId",      "value": "1",  "type": "string" },
+    { "key": "resultatId",     "value": "1",  "type": "string" },
+    { "key": "pharmacieId",    "value": "1",  "type": "string" },
+    { "key": "dispensationId", "value": "1",  "type": "string" }
+  ],
+  "item": [
+
+    {
+      "name": "01 — Patients",
+      "description": "6 endpoints — GET /api/patients | POST | GET /{id} | GET /nin/{nin} | PUT /{id} | DELETE /{id}",
+      "item": [
+        {
+          "name": "GET All Patients",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/patients", "host": ["{{baseUrl}}"], "path": ["api","patients"] },
+            "description": "Returns list of all patients."
+          }
+        },
+        {
+          "name": "GET Patient by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/patients/{{patientId}}", "host": ["{{baseUrl}}"], "path": ["api","patients","{{patientId}}"] },
+            "description": "Returns one patient by primary key."
+          }
+        },
+        {
+          "name": "GET Patient by NIN",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/patients/nin/PB344551", "host": ["{{baseUrl}}"], "path": ["api","patients","nin","PB344551"] },
+            "description": "Returns patient by National Identification Number."
+          }
+        },
+        {
+          "name": "POST Create Patient",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nin\": \"TEST001\",\n  \"nom\": \"BENALI\",\n  \"prenom\": \"Hamid\",\n  \"dateNaissance\": \"1990-03-15\",\n  \"groupeSanguin\": \"O+\",\n  \"telephone\": \"0661234567\",\n  \"email\": \"hamid.benali@gmail.com\",\n  \"adresse\": \"12 Rue des Fleurs, Casablanca\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/patients", "host": ["{{baseUrl}}"], "path": ["api","patients"] },
+            "description": "Required: nin, nom, prenom, dateNaissance. Optional: groupeSanguin, telephone, email, adresse.\nReturns HTTP 201."
+          }
+        },
+        {
+          "name": "PUT Update Patient",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nin\": \"TEST001\",\n  \"nom\": \"BENALI\",\n  \"prenom\": \"Hamid\",\n  \"dateNaissance\": \"1990-03-15\",\n  \"groupeSanguin\": \"A+\",\n  \"telephone\": \"0699999999\",\n  \"email\": \"hamid.updated@gmail.com\",\n  \"adresse\": \"99 Nouvelle Adresse, Rabat\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/patients/{{patientId}}", "host": ["{{baseUrl}}"], "path": ["api","patients","{{patientId}}"] },
+            "description": "Full replacement of patient fields. nin cannot be changed by logic (validation in service)."
+          }
+        },
+        {
+          "name": "DELETE Patient",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/patients/{{patientId}}", "host": ["{{baseUrl}}"], "path": ["api","patients","{{patientId}}"] },
+            "description": "Returns HTTP 204 No Content."
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "02 — Médecins",
+      "description": "6 endpoints — GET /api/medecins | POST | GET /{id} | GET /numOrdre/{n} | PUT /{id} | DELETE /{id}",
+      "item": [
+        {
+          "name": "GET All Médecins",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/medecins", "host": ["{{baseUrl}}"], "path": ["api","medecins"] }
+          }
+        },
+        {
+          "name": "GET Médecin by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/medecins/{{medecinId}}", "host": ["{{baseUrl}}"], "path": ["api","medecins","{{medecinId}}"] }
+          }
+        },
+        {
+          "name": "GET Médecin by NumOrdre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/medecins/numOrdre/ORD-CARD-001", "host": ["{{baseUrl}}"], "path": ["api","medecins","numOrdre","ORD-CARD-001"] },
+            "description": "Lookup by professional order number (unique)."
+          }
+        },
+        {
+          "name": "POST Create Médecin",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"MANSOURI\",\n  \"prenom\": \"Khalid\",\n  \"specialite\": \"Cardiologie\",\n  \"numOrdre\": \"ORD-CARD-001\",\n  \"telephone\": \"0522334455\",\n  \"email\": \"k.mansouri@clinique.ma\",\n  \"cabinetAdresse\": \"15 Bd Zerktouni, Casablanca\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/medecins", "host": ["{{baseUrl}}"], "path": ["api","medecins"] },
+            "description": "Required: nom, prenom, specialite, numOrdre, email. Optional: telephone, cabinetAdresse.\nNote: utilisateurId is NOT in the DTO (reserved for Keycloak). Returns HTTP 201."
+          }
+        },
+        {
+          "name": "PUT Update Médecin",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"MANSOURI\",\n  \"prenom\": \"Khalid\",\n  \"specialite\": \"Cardiologie\",\n  \"numOrdre\": \"ORD-CARD-001\",\n  \"telephone\": \"0522999999\",\n  \"email\": \"k.mansouri.updated@clinique.ma\",\n  \"cabinetAdresse\": \"25 Bd Anfa, Casablanca\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/medecins/{{medecinId}}", "host": ["{{baseUrl}}"], "path": ["api","medecins","{{medecinId}}"] }
+          }
+        },
+        {
+          "name": "DELETE Médecin",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/medecins/{{medecinId}}", "host": ["{{baseUrl}}"], "path": ["api","medecins","{{medecinId}}"] },
+            "description": "Returns HTTP 204 No Content."
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "03 — Consultations",
+      "description": "7 endpoints — CRUD + filter by patient + filter by médecin",
+      "item": [
+        {
+          "name": "GET All Consultations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/consultations", "host": ["{{baseUrl}}"], "path": ["api","consultations"] }
+          }
+        },
+        {
+          "name": "GET Consultation by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/consultations/{{consultationId}}", "host": ["{{baseUrl}}"], "path": ["api","consultations","{{consultationId}}"] }
+          }
+        },
+        {
+          "name": "GET Consultations by Patient",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/consultations/patient/{{patientId}}", "host": ["{{baseUrl}}"], "path": ["api","consultations","patient","{{patientId}}"] },
+            "description": "Returns all consultations for a given patient."
+          }
+        },
+        {
+          "name": "GET Consultations by Médecin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/consultations/medecin/{{medecinId}}", "host": ["{{baseUrl}}"], "path": ["api","consultations","medecin","{{medecinId}}"] },
+            "description": "Returns all consultations for a given doctor."
+          }
+        },
+        {
+          "name": "POST Create Consultation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patientId\": 1,\n  \"medecinId\": 1,\n  \"dateHeure\": \"2025-05-14T09:30:00\",\n  \"motif\": \"Douleurs thoraciques récurrentes\",\n  \"diagnosticCim10\": \"I25.1\",\n  \"compteRendu\": \"Patient présentant des douleurs depuis 2 semaines. ECG normal. Holter recommandé.\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/consultations", "host": ["{{baseUrl}}"], "path": ["api","consultations"] },
+            "description": "Required: patientId, medecinId, dateHeure (ISO 8601 datetime), motif.\nOptional: diagnosticCim10, compteRendu.\nReturns HTTP 201."
+          }
+        },
+        {
+          "name": "PUT Update Consultation",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patientId\": 1,\n  \"medecinId\": 1,\n  \"dateHeure\": \"2025-05-14T10:00:00\",\n  \"motif\": \"Douleurs thoraciques — suivi\",\n  \"diagnosticCim10\": \"I25.1\",\n  \"compteRendu\": \"Résultat holter reçu. Traitement ajusté.\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/consultations/{{consultationId}}", "host": ["{{baseUrl}}"], "path": ["api","consultations","{{consultationId}}"] }
+          }
+        },
+        {
+          "name": "DELETE Consultation",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/consultations/{{consultationId}}", "host": ["{{baseUrl}}"], "path": ["api","consultations","{{consultationId}}"] },
+            "description": "Returns HTTP 204 No Content."
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "04 — Ordonnances",
+      "description": "8 endpoints — CRUD + filter by patient + filter by statut + close + expire",
+      "item": [
+        {
+          "name": "GET All Ordonnances",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/ordonnances", "host": ["{{baseUrl}}"], "path": ["api","ordonnances"] }
+          }
+        },
+        {
+          "name": "GET Ordonnance by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/ordonnances/{{ordonnanceId}}", "host": ["{{baseUrl}}"], "path": ["api","ordonnances","{{ordonnanceId}}"] }
+          }
+        },
+        {
+          "name": "GET Ordonnances by Patient",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/ordonnances/patient/{{patientId}}", "host": ["{{baseUrl}}"], "path": ["api","ordonnances","patient","{{patientId}}"] }
+          }
+        },
+        {
+          "name": "GET Ordonnances by Statut — ACTIVE",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/ordonnances/statut/ACTIVE", "host": ["{{baseUrl}}"], "path": ["api","ordonnances","statut","ACTIVE"] },
+            "description": "Valid values: EN_ATTENTE | ACTIVE | USED | EXPIRED"
+          }
+        },
+        {
+          "name": "POST Create Ordonnance",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consultationId\": 1,\n  \"patientId\": 1,\n  \"dateExpiration\": \"2025-11-14\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/ordonnances", "host": ["{{baseUrl}}"], "path": ["api","ordonnances"] },
+            "description": "Required: consultationId, patientId, dateExpiration (YYYY-MM-DD).\nstatut is auto-set to ACTIVE by @PrePersist.\nReturns HTTP 201."
+          }
+        },
+        {
+          "name": "PUT Close Ordonnance (→ USED)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/ordonnances/{{ordonnanceId}}/close", "host": ["{{baseUrl}}"], "path": ["api","ordonnances","{{ordonnanceId}}","close"] },
+            "description": "Transitions statut: ACTIVE → USED. No request body needed."
+          }
+        },
+        {
+          "name": "PUT Expire Ordonnance (→ EXPIRED)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/ordonnances/{{ordonnanceId}}/expire", "host": ["{{baseUrl}}"], "path": ["api","ordonnances","{{ordonnanceId}}","expire"] },
+            "description": "Transitions statut: ACTIVE → EXPIRED. No request body needed."
+          }
+        },
+        {
+          "name": "DELETE Ordonnance",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/ordonnances/{{ordonnanceId}}", "host": ["{{baseUrl}}"], "path": ["api","ordonnances","{{ordonnanceId}}"] },
+            "description": "Returns HTTP 204 No Content."
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "05 — Laboratoire / Demandes d'Analyse",
+      "description": "7 endpoints — CRUD + filter by patient + filter by statut + update statut (via @RequestParam)",
+      "item": [
+        {
+          "name": "GET All Demandes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/demandes", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","demandes"] }
+          }
+        },
+        {
+          "name": "GET Demande by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/demandes/{{demandeId}}", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","demandes","{{demandeId}}"] }
+          }
+        },
+        {
+          "name": "GET Demandes by Patient",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/demandes/patient/{{patientId}}", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","demandes","patient","{{patientId}}"] }
+          }
+        },
+        {
+          "name": "GET Demandes by Statut — EN_ATTENTE",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/demandes/statut/EN_ATTENTE", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","demandes","statut","EN_ATTENTE"] },
+            "description": "Valid values: EN_ATTENTE | EN_COURS | TERMINE"
+          }
+        },
+        {
+          "name": "POST Create Demande d'Analyse",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consultationId\": 1,\n  \"patientId\": 1,\n  \"typeAnalyse\": \"NFS - Numération Formule Sanguine\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/demandes", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","demandes"] },
+            "description": "Required: consultationId, patientId, typeAnalyse.\nstatut is auto-set to EN_ATTENTE.\nReturns HTTP 201."
+          }
+        },
+        {
+          "name": "PUT Update Statut Demande — @RequestParam",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/laboratoire/demandes/{{demandeId}}/statut?statut=EN_COURS",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","laboratoire","demandes","{{demandeId}}","statut"],
+              "query": [{ "key": "statut", "value": "EN_COURS" }]
+            },
+            "description": "IMPORTANT: statut is a @RequestParam (query string), NOT a body.\nValid values: EN_ATTENTE | EN_COURS | TERMINE\nExample: PUT /api/laboratoire/demandes/1/statut?statut=EN_COURS"
+          }
+        },
+        {
+          "name": "DELETE Demande",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/demandes/{{demandeId}}", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","demandes","{{demandeId}}"] },
+            "description": "Returns HTTP 204 No Content."
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "06 — Laboratoire / Résultats d'Analyse",
+      "description": "6 endpoints — GET all | GET by ID | GET by demande | GET by alerte | POST | DELETE",
+      "item": [
+        {
+          "name": "GET All Résultats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/resultats", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","resultats"] }
+          }
+        },
+        {
+          "name": "GET Résultat by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/resultats/{{resultatId}}", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","resultats","{{resultatId}}"] }
+          }
+        },
+        {
+          "name": "GET Résultat by Demande ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/resultats/demande/{{demandeId}}", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","resultats","demande","{{demandeId}}"] },
+            "description": "Returns the single résultat linked to a given demande (1-to-1)."
+          }
+        },
+        {
+          "name": "GET Résultats Critiques",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/resultats/alerte/true", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","resultats","alerte","true"] },
+            "description": "Use `true` for critical alerts, `false` for normal results."
+          }
+        },
+        {
+          "name": "POST Create Résultat d'Analyse",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"demandeId\": 1,\n  \"valeursJson\": \"{\\\"hemoglobine\\\": \\\"14.2 g/dL\\\", \\\"leucocytes\\\": \\\"6200 /mm3\\\", \\\"plaquettes\\\": \\\"250000 /mm3\\\"}\",\n  \"alerteCritique\": false,\n  \"fichierUrl\": \"/files/resultat-1.pdf\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/resultats", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","resultats"] },
+            "description": "Required: demandeId, valeursJson (JSON string).\nOptional: alerteCritique (default false), fichierUrl.\nNOTE: valeursJson must be a valid JSON string — escape inner quotes.\nReturns HTTP 201."
+          }
+        },
+        {
+          "name": "DELETE Résultat",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/laboratoire/resultats/{{resultatId}}", "host": ["{{baseUrl}}"], "path": ["api","laboratoire","resultats","{{resultatId}}"] },
+            "description": "Résultats are immutable once published — use DELETE only for corrections. Returns HTTP 204."
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "07 — Pharmacie",
+      "description": "5 endpoints for pharmacies + 6 for dispensations = 11 total",
+      "item": [
+        {
+          "name": "Pharmacies",
+          "item": [
+            {
+              "name": "GET All Pharmacies",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie", "host": ["{{baseUrl}}"], "path": ["api","pharmacie"] }
+              }
+            },
+            {
+              "name": "GET Pharmacie by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/{{pharmacieId}}", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","{{pharmacieId}}"] }
+              }
+            },
+            {
+              "name": "POST Create Pharmacie",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nom\": \"Pharmacie Al Amal\",\n  \"adresse\": \"12 Rue Liberté, Casablanca\",\n  \"telephone\": \"0522445566\",\n  \"email\": \"alamal@pharma.ma\",\n  \"numAutorisation\": \"AUTH-CASA-001\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": { "raw": "{{baseUrl}}/api/pharmacie", "host": ["{{baseUrl}}"], "path": ["api","pharmacie"] },
+                "description": "Required: nom, email, numAutorisation. Optional: adresse, telephone.\nNOTE: utilisateurId is NOT in the DTO (reserved for Keycloak).\nReturns HTTP 201."
+              }
+            },
+            {
+              "name": "PUT Update Pharmacie",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nom\": \"Pharmacie Al Amal — Centrale\",\n  \"adresse\": \"14 Rue Liberté, Casablanca\",\n  \"telephone\": \"0522777777\",\n  \"email\": \"alamal.centrale@pharma.ma\",\n  \"numAutorisation\": \"AUTH-CASA-001\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/{{pharmacieId}}", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","{{pharmacieId}}"] }
+              }
+            },
+            {
+              "name": "DELETE Pharmacie",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/{{pharmacieId}}", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","{{pharmacieId}}"] },
+                "description": "Returns HTTP 204 No Content."
+              }
+            }
+          ]
+        },
+        {
+          "name": "Dispensations",
+          "item": [
+            {
+              "name": "GET All Dispensations",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/dispensations", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","dispensations"] }
+              }
+            },
+            {
+              "name": "GET Dispensation by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/dispensations/{{dispensationId}}", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","dispensations","{{dispensationId}}"] }
+              }
+            },
+            {
+              "name": "GET Dispensations by Pharmacie",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/dispensations/pharmacie/{{pharmacieId}}", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","dispensations","pharmacie","{{pharmacieId}}"] },
+                "description": "Returns all dispensations made by a given pharmacy."
+              }
+            },
+            {
+              "name": "GET Dispensation by Ordonnance",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/dispensations/ordonnance/{{ordonnanceId}}", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","dispensations","ordonnance","{{ordonnanceId}}"] },
+                "description": "Returns the single dispensation for a given ordonnance (1-to-1 enforced by unique constraint on ordonnance_id)."
+              }
+            },
+            {
+              "name": "POST Create Dispensation",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ordonnanceId\": 1,\n  \"pharmacieId\": 1,\n  \"interactionsOk\": true,\n  \"pharmacienNom\": \"Hassan Ouali\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/dispensations", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","dispensations"] },
+                "description": "Required: ordonnanceId, pharmacieId, pharmacienNom.\nOptional: interactionsOk (default true via @PrePersist).\nConstraint: one ordonnance can only be dispensed once (UNIQUE on ordonnance_id).\nReturns HTTP 201."
+              }
+            },
+            {
+              "name": "DELETE Dispensation",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": { "raw": "{{baseUrl}}/api/pharmacie/dispensations/{{dispensationId}}", "host": ["{{baseUrl}}"], "path": ["api","pharmacie","dispensations","{{dispensationId}}"] },
+                "description": "Returns HTTP 204 No Content."
+              }
+            }
+          ]
+        }
+      ]
+    }
+
+  ]
+}

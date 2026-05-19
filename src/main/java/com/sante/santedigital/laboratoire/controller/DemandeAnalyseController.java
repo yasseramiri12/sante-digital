@@ -43,7 +43,7 @@ public class DemandeAnalyseController {
     }
 
     @PutMapping("/{id}/statut")
-    public ResponseEntity<DemandeAnalyseDTO> updateDemandeStatut(@PathVariable Long id, @RequestBody String statut) {
+    public ResponseEntity<DemandeAnalyseDTO> updateDemandeStatut(@PathVariable Long id, @RequestParam String statut) {
         return ResponseEntity.ok(demandeAnalyseService.updateDemandeStatut(id, statut));
     }
 

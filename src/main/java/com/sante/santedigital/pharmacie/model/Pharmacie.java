@@ -21,7 +21,7 @@ public class Pharmacie {
     @Column(name = "pharmacie_id")
     private Long pharmacieId;
 
-    @Column(name = "utilisateur_id", nullable = false, unique = true)
+    @Column(name = "utilisateur_id", nullable = true, unique = true)
     private Long utilisateurId;
 
     @Column(name = "nom", nullable = false, length = 100)

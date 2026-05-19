@@ -32,7 +32,8 @@ public class OrdonnanceService {
     }
 
     public List<OrdonnanceDTO> getOrdonnancesByStatut(String statut) {
-        return ordonnanceRepository.findByStatut(statut)
+        StatutOrdonnance statutEnum = StatutOrdonnance.valueOf(statut.toUpperCase());
+        return ordonnanceRepository.findByStatut(statutEnum)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());

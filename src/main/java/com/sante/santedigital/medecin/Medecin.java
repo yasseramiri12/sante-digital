@@ -20,7 +20,7 @@ public class Medecin {
     @Column(name = "medecin_id")
     private Long medecinId;
 
-    @Column(name = "utilisateur_id", unique = true, nullable = false)
+    @Column(name = "utilisateur_id", unique = true, nullable = true)
     private Long utilisateurId;
 
     @Column(name = "nom", nullable = false, length = 50)
